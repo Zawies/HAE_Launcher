@@ -13,7 +13,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:cardBackgroundColor="#535353"
+        app:cardBackgroundColor="@color/viewBackground"
         app:cardCornerRadius="16dp">
 
         <TextClock
@@ -27,6 +27,17 @@
             android:textSize="36sp"
             android:textColor="@color/white"/>
     </androidx.cardview.widget.CardView>
+
+    <ImageButton
+        android:layout_margin="16dp"
+        android:contentDescription="@string/app_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rounded_button"
+        android:src="@drawable/ic_apps_icon"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

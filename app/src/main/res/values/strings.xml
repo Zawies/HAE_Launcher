@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">HAE_Launcher</string>
+    <string name="app_button">Launch app list button</string>
 </resources>
