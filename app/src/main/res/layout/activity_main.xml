@@ -6,29 +6,38 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <androidx.cardview.widget.CardView
+
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="16%"
+        android:textSize="16sp"
+        android:textColor="@color/white"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="16dp"
+        android:background="@color/viewBackground"/>
+    <TextClock
+        android:padding="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:cardBackgroundColor="@color/viewBackground"
-        app:cardCornerRadius="16dp">
+        android:background="@drawable/rounded_button"
+        android:layout_margin="8dp"
+        android:id="@+id/clock"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:format12Hour="hh:mm:ss a"
+        android:format24Hour="hh:mm:ss"
+        android:textSize="36sp"
+        android:textColor="@color/white"/>
 
-        <TextClock
-            android:layout_margin="4dp"
-            android:id="@+id/clock"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:format12Hour="hh:mm:ss a"
-            android:format24Hour="hh:mm:ss"
-            android:textSize="36sp"
-            android:textColor="@color/white"/>
-    </androidx.cardview.widget.CardView>
 
     <ImageButton
+        android:id="@+id/appList"
+        android:padding="4dp"
         android:layout_margin="16dp"
         android:contentDescription="@string/app_button"
         android:layout_width="wrap_content"
