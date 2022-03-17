@@ -16,7 +16,6 @@
             android:textColor="@color/white"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Google Chrome"
             android:layout_gravity="center"
             android:gravity="center"/>
 
