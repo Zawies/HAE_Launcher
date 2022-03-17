@@ -1,4 +1,4 @@
-package uk.co.dooapp.hae_launcher.repositories;
+package uk.co.dooapp.hae_launcher.utils;
 
 import android.content.Context;
 import android.content.Intent;
@@ -7,19 +7,15 @@ import android.content.pm.ResolveInfo;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Executor;
 
 import uk.co.dooapp.hae_launcher.models.AppInfo;
+import uk.co.dooapp.hae_launcher.repositories.Result;
 
-public class AppInfoRepository {
-    private Executor executor;
+public class AppListParser {
     private Context context;
-
-    public AppInfoRepository(Executor executor, Context context){
-        this.executor = executor;
+    public AppListParser(Context context){
         this.context = context;
     }
-
 
     public Result<List<AppInfo>> getAppList(){
         PackageManager pm = context.getPackageManager();
@@ -41,21 +37,5 @@ public class AppInfoRepository {
         } catch (Exception e){
             return new Result.Error<List<AppInfo>>(e);
         }
-    }
-
-    public void makeAppListRequest(final RepositoryCallback<List<AppInfo>> callback){
-
-        executor.execute(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Result<List<AppInfo>> response = getAppList();
-                    callback.onComplete(response);
-                } catch (Exception e) {
-                    Result<List<AppInfo>> errorResult = new Result.Error<>(e);
-                    callback.onComplete(errorResult);
-                }
-            }
-        });
     }
 }

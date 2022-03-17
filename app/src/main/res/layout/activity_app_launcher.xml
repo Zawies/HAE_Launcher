@@ -8,6 +8,7 @@
     android:background="@color/appGalleryBackground">
 
         <androidx.recyclerview.widget.RecyclerView
+            android:padding="16dp"
             android:id="@+id/appRecyclerView"
             android:layout_width="0dp"
             android:layout_height="0dp"

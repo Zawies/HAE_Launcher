@@ -25,8 +25,7 @@ public class MainActivity extends AppCompatActivity {
         registerBatteryReceiver();
     }
 
-    private void addAppListListener()
-    {
+    private void addAppListListener() {
         ImageButton appList = findViewById(R.id.appList);
         appList.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,4 +53,5 @@ public class MainActivity extends AppCompatActivity {
         IntentFilter batteryLevelFilter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
         registerReceiver(batteryLevelReceiver, batteryLevelFilter);
     }
+
 }
