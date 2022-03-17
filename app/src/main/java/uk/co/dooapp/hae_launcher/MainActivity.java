@@ -19,6 +19,7 @@ import org.w3c.dom.Text;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 
 import uk.co.dooapp.hae_launcher.models.AppInfo;
 import uk.co.dooapp.hae_launcher.models.WeatherInfo;
@@ -28,15 +29,18 @@ import uk.co.dooapp.hae_launcher.viewmodels.AppLauncherViewModel;
 import uk.co.dooapp.hae_launcher.viewmodels.MainViewModel;
 
 public class MainActivity extends AppCompatActivity {
-    private final ExecutorService executor = Executors.newSingleThreadExecutor();
+    private ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
     private ProgressBar progressBar;
     private TextView cityName, countryName, temperature, description;
+    private WeatherRepository weatherRepository = new WeatherRepository(executor);
+    private MainViewModel mainViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        mainViewModel = new MainViewModel(getApplication(), weatherRepository);
         progressBar = findViewById(R.id.progressBar);
         cityName = findViewById(R.id.cityName);
         countryName = findViewById(R.id.countryName);
@@ -59,8 +63,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initWeatherInfoLiveData(){
-        WeatherRepository weatherRepository = new WeatherRepository(executor);
-        MainViewModel mainViewModel = new MainViewModel(getApplication(), weatherRepository);
         mainViewModel.makeWeatherRequest();
         mainViewModel.getWeatherInfo().observe(this, new Observer<WeatherInfo>() {
             @Override
@@ -100,5 +102,4 @@ public class MainActivity extends AppCompatActivity {
         IntentFilter batteryLevelFilter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
         registerReceiver(batteryLevelReceiver, batteryLevelFilter);
     }
-
 }

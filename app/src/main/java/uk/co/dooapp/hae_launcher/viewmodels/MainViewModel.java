@@ -28,6 +28,7 @@ public class MainViewModel extends AndroidViewModel {
         weatherRepository.makeWeatherRequest(new RepositoryCallback<WeatherInfo>() {
             @Override
             public void onComplete(Result<WeatherInfo> result) {
+                System.out.println("Making weather request");
                 if (result instanceof Result.Success) {
                     weatherInfo.postValue(((Result.Success<WeatherInfo>) result).data);
                     isUpdating.postValue(false);
@@ -36,6 +37,7 @@ public class MainViewModel extends AndroidViewModel {
                     getApplication().getApplicationContext().getMainExecutor().execute(new Runnable() {
                         @Override
                         public void run() {
+                            System.out.println(getApplication().getApplicationContext().getClass().getSimpleName());
                             Toast.makeText(getApplication().getApplicationContext(), ((Result.Error<WeatherInfo>) result).exception.toString(), Toast.LENGTH_LONG).show();
                         }
                     });
