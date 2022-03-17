@@ -3,20 +3,25 @@ package uk.co.dooapp.hae_launcher.models;
 import android.graphics.drawable.Drawable;
 
 public class AppInfo {
-    String name, packageName;
-    Drawable icon;
+    private String packageName;
+    private CharSequence name;
+    private Drawable icon;
 
-    public AppInfo(String name, String packageName, Drawable icon) {
+
+    public AppInfo(){
+
+    }
+    public AppInfo(CharSequence name, String packageName, Drawable icon) {
         this.name = name;
         this.packageName = packageName;
         this.icon = icon;
     }
 
-    public String getName() {
+    public CharSequence getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(CharSequence name) {
         this.name = name;
     }
 
