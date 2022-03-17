@@ -4,6 +4,9 @@ public class WeatherInfo {
     private String cityName, county, description;
     private int temperature;
 
+    public WeatherInfo() {
+    }
+
     public WeatherInfo(String cityName, String county, String description, int temperature) {
         this.cityName = cityName;
         this.county = county;

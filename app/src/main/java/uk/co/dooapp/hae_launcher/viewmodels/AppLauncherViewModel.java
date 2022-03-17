@@ -12,7 +12,6 @@ import java.util.List;
 
 import uk.co.dooapp.hae_launcher.models.AppInfo;
 import uk.co.dooapp.hae_launcher.repositories.AppListRepository;
-import uk.co.dooapp.hae_launcher.repositories.RepositoryCallback;
 import uk.co.dooapp.hae_launcher.repositories.Result;
 
 public class AppLauncherViewModel extends AndroidViewModel  {
@@ -27,17 +26,13 @@ public class AppLauncherViewModel extends AndroidViewModel  {
 
     public void makeAppListRequest(){
         isUpdating.setValue(true);
-        appListRepository.makeAppListRequest(new RepositoryCallback<List<AppInfo>>() {
-            @Override
-            public void onComplete(Result<List<AppInfo>> result) {
-                if (result instanceof Result.Success) {
-                    appList.postValue(((Result.Success<List<AppInfo>>) result).data);
-                    isUpdating.postValue(false);
-                } else {
-                    Toast.makeText(getApplication().getApplicationContext(), ((Result.Error<List<AppInfo>>) result).exception.getLocalizedMessage(), Toast.LENGTH_LONG).show();
-                    isUpdating.postValue(false);
-                }
+        appListRepository.makeAppListRequest(result -> {
+            if (result instanceof Result.Success) {
+                appList.postValue(((Result.Success<List<AppInfo>>) result).data);
+            } else {
+                Toast.makeText(getApplication().getApplicationContext(), ((Result.Error<List<AppInfo>>) result).exception.getLocalizedMessage(), Toast.LENGTH_LONG).show();
             }
+            isUpdating.postValue(false);
         });
     }
 
