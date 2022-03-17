@@ -7,6 +7,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.BatteryManager;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
@@ -19,9 +20,11 @@ import org.w3c.dom.Text;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import java.util.concurrent.ScheduledExecutorService;
 
 import uk.co.dooapp.hae_launcher.models.AppInfo;
+import uk.co.dooapp.hae_launcher.models.BatteryInfo;
 import uk.co.dooapp.hae_launcher.models.WeatherInfo;
 import uk.co.dooapp.hae_launcher.repositories.AppListRepository;
 import uk.co.dooapp.hae_launcher.repositories.WeatherRepository;
@@ -31,7 +34,7 @@ import uk.co.dooapp.hae_launcher.viewmodels.MainViewModel;
 public class MainActivity extends AppCompatActivity {
     private ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
     private ProgressBar progressBar;
-    private TextView cityName, countryName, temperature, description;
+    private TextView cityName, countryName, temperature, description, batteryLevel;
     private WeatherRepository weatherRepository = new WeatherRepository(executor);
     private MainViewModel mainViewModel;
 
@@ -46,8 +49,9 @@ public class MainActivity extends AppCompatActivity {
         countryName = findViewById(R.id.countryName);
         temperature = findViewById(R.id.temperature);
         description = findViewById(R.id.description);
+        batteryLevel = findViewById(R.id.batteryLevel);
         addAppListListener();
-        registerBatteryReceiver();
+        //registerBatteryReceiver();
         initWeatherInfoLiveData();
     }
 
@@ -64,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void initWeatherInfoLiveData(){
         mainViewModel.makeWeatherRequest();
+        mainViewModel.receiveBatteryUpdates();
         mainViewModel.getWeatherInfo().observe(this, new Observer<WeatherInfo>() {
             @Override
             public void onChanged(WeatherInfo weatherInfo) {
@@ -83,23 +88,16 @@ public class MainActivity extends AppCompatActivity {
                     progressBar.setVisibility(View.GONE);
             }
         });
-    }
 
-    private void registerBatteryReceiver(){
-        TextView batteryLevel = findViewById(R.id.batteryLevel);
-        BroadcastReceiver batteryLevelReceiver = new BroadcastReceiver() {
-            public void onReceive(Context context, Intent intent) {
-                int rawlevel = intent.getIntExtra("level", -1);
-                System.out.println("Raw level: " + rawlevel);
-                int scale = intent.getIntExtra("scale", -1);
-                int level = -1;
-                if (rawlevel >= 0 && scale > 0) {
-                    level = (rawlevel * 100) / scale;
-                }
-                batteryLevel.setText(level+"%");
+        mainViewModel.getBatteryLevel().observe(this, new Observer<BatteryInfo>() {
+            @Override
+            public void onChanged(BatteryInfo batteryInfo) {
+                if(batteryInfo.getStatus() == BatteryManager.BATTERY_STATUS_CHARGING ||
+                        batteryInfo.getStatus() == BatteryManager.BATTERY_STATUS_FULL)
+                    batteryLevel.setText("Charging " + batteryInfo.getLevel() + " %");
+                else
+                    batteryLevel.setText(batteryInfo.getLevel() + " %");
             }
-        };
-        IntentFilter batteryLevelFilter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
-        registerReceiver(batteryLevelReceiver, batteryLevelFilter);
+        });
     }
 }
