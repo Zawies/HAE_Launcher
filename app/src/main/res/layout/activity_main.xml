@@ -11,13 +11,13 @@
         android:id="@+id/batteryLevel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="16%"
-        android:textSize="16sp"
-        android:textColor="@color/white"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         android:layout_margin="16dp"
-        android:background="@color/viewBackground"/>
+        android:background="@color/viewBackground"
+        android:text="16%"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
     <TextClock
         android:padding="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -35,6 +35,81 @@
         android:textSize="36sp"
         android:textColor="@color/white"/>
 
+           <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_margin="8dp"
+               android:padding="4dp"
+                app:layout_constraintBottom_toTopOf="@id/clock"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_button">
+
+                    <ProgressBar
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:visibility="gone"/>
+
+                    <LinearLayout
+                        android:layout_margin="4dp"
+                        android:id="@+id/locationLayout"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:textSize="26sp"
+                            android:textColor="@color/white"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Beijing"
+                            android:layout_weight="0.5"
+                            android:textAlignment="center"
+                            android:id="@+id/cityName"/>
+                        <TextView
+                            android:textSize="26sp"
+                            android:textColor="@color/white"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="China"
+                            android:layout_weight="0.5"
+                            android:textAlignment="center"
+                            android:id="@+id/countryName"/>
+                    </LinearLayout>
+
+               <TextView
+                   android:layout_margin="4dp"
+                   android:textSize="32sp"
+                   android:textColor="@color/white"
+                   android:id="@+id/temperature"
+                   app:layout_constraintTop_toBottomOf="@id/locationLayout"
+                   app:layout_constraintStart_toStartOf="parent"
+                   app:layout_constraintEnd_toEndOf="parent"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:textAlignment="center"
+                   android:text="5°"/>
+
+               <TextView
+                   android:layout_margin="4dp"
+                   android:textSize="22sp"
+                   android:textColor="@color/white"
+                   android:id="@+id/description"
+                   app:layout_constraintTop_toBottomOf="@id/temperature"
+                   app:layout_constraintStart_toStartOf="parent"
+                   app:layout_constraintEnd_toEndOf="parent"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:textAlignment="center"
+                   android:text="Sunny intervals and light winds"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
 
     <ImageButton
         android:id="@+id/appList"
@@ -48,7 +123,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"/>
-
 </androidx.constraintlayout.widget.ConstraintLayout>
 
 
