@@ -20,7 +20,7 @@ import uk.co.dooapp.hae_launcher.models.AppInfo;
 
 public class AppListRecyclerViewAdapter extends RecyclerView.Adapter<AppListRecyclerViewAdapter.ViewHolder>{
     private Context mContext;
-    private List<AppInfo> mApps = new ArrayList<>();
+    private List<AppInfo> mApps;
 
     public AppListRecyclerViewAdapter(Context context, ArrayList<AppInfo> apps) {
         mContext = context;
@@ -50,12 +50,9 @@ public class AppListRecyclerViewAdapter extends RecyclerView.Adapter<AppListRecy
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.appIcon.setImageDrawable(mApps.get(position).getIcon());
         holder.appName.setText(mApps.get(position).getName());
-        holder.parentLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent launchIntent = mContext.getPackageManager().getLaunchIntentForPackage(mApps.get(position).getPackageName());
-                mContext.startActivity(launchIntent);
-            }
+        holder.parentLayout.setOnClickListener(view -> {
+            Intent launchIntent = mContext.getPackageManager().getLaunchIntentForPackage(mApps.get(position).getPackageName());
+            mContext.startActivity(launchIntent);
         });
     }
 

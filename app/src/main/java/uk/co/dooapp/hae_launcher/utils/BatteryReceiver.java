@@ -5,11 +5,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.BatteryManager;
-import android.widget.TextView;
 
 import androidx.lifecycle.MutableLiveData;
 
-import uk.co.dooapp.hae_launcher.R;
 import uk.co.dooapp.hae_launcher.models.BatteryInfo;
 
 public class BatteryReceiver {

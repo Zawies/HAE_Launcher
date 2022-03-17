@@ -1,17 +1,8 @@
 package uk.co.dooapp.hae_launcher.repositories;
 
-import android.os.Handler;
-import android.os.Looper;
 
-import org.json.JSONObject;
-
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Scanner;
-import java.util.concurrent.Executor;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
