@@ -5,4 +5,5 @@
     <color name="colorAccent">#03DAC5</color>
     <color name="white">#ffffff</color>
     <color name="viewBackground">#535353</color>
+    <color name="appGalleryBackground">#B3474444</color>
 </resources>
