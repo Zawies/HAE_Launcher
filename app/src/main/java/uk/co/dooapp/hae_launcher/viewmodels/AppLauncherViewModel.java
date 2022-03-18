@@ -30,7 +30,9 @@ public class AppLauncherViewModel extends AndroidViewModel  {
             if (result instanceof Result.Success) {
                 appList.postValue(((Result.Success<List<AppInfo>>) result).data);
             } else {
-                Toast.makeText(getApplication().getApplicationContext(), ((Result.Error<List<AppInfo>>) result).exception.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+                getApplication().getMainExecutor().execute(() ->
+                        Toast.makeText(getApplication().getApplicationContext(), ((Result.Error<List<AppInfo>>) result).exception.getLocalizedMessage(), Toast.LENGTH_LONG).show());
+
             }
             isUpdating.postValue(false);
         });

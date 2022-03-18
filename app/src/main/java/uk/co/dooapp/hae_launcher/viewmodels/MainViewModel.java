@@ -26,20 +26,25 @@ public class MainViewModel extends AndroidViewModel {
 
     public void makeWeatherRequest(){
         isUpdating.setValue(true);
-        weatherRepository.makeWeatherRequest(result -> {
-            System.out.println("Making weather request");
+        weatherRepository.receiveWeatherUpdates(result -> {
+
             if (result instanceof Result.Success) {
                 weatherInfo.postValue(((Result.Success<WeatherInfo>) result).data);
             } else {
-                System.out.println(((Result.Error<WeatherInfo>) result).exception.toString());
                 getApplication().getApplicationContext().getMainExecutor().execute(() -> {
-                    System.out.println(getApplication().getApplicationContext().getClass().getSimpleName());
                     Toast.makeText(getApplication().getApplicationContext(), ((Result.Error<WeatherInfo>) result).exception.toString(), Toast.LENGTH_LONG).show();
                 });
-                System.out.println("blad");
             }
             isUpdating.postValue(false);
         });
+    }
+
+    public void cancelWeatherUpdates(){
+        weatherRepository.cancelWeatherUpdates();
+    }
+
+    public boolean isUpdatesCancelled(){
+        return weatherRepository.isUpdatesCancelled();
     }
     public void receiveBatteryUpdates(){
         BatteryReceiver batteryReceiver = new BatteryReceiver(getApplication().getApplicationContext());

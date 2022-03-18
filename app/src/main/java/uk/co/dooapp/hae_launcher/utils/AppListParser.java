@@ -18,24 +18,25 @@ public class AppListParser {
     }
 
     public Result<List<AppInfo>> getAppList(){
-        PackageManager pm = context.getPackageManager();
+        PackageManager packageManager = context.getPackageManager();
         List<AppInfo> apps = new ArrayList<>();
 
         try {
-            Intent i = new Intent(Intent.ACTION_MAIN, null);
-            i.addCategory(Intent.CATEGORY_LAUNCHER);
-
-            List<ResolveInfo> allApps = pm.queryIntentActivities(i, 0);
+            Intent intent = new Intent(Intent.ACTION_MAIN, null);
+            intent.addCategory(Intent.CATEGORY_LAUNCHER);
+            List<ResolveInfo> allApps = packageManager.queryIntentActivities(intent, 0);
             for (ResolveInfo ri : allApps) {
-                AppInfo app = new AppInfo();
-                app.setName(ri.loadLabel(pm));
-                app.setPackageName(ri.activityInfo.packageName);
-                app.setIcon(ri.activityInfo.loadIcon(pm));
-                apps.add(app);
+                if(!ri.activityInfo.packageName.equals(context.getPackageName())) {
+                    AppInfo app = new AppInfo();
+                    app.setName(ri.loadLabel(packageManager));
+                    app.setPackageName(ri.activityInfo.packageName);
+                    app.setIcon(ri.activityInfo.loadIcon(packageManager));
+                    apps.add(app);
+                }
             }
-            return new Result.Success<List<AppInfo>>(apps);
+            return new Result.Success<>(apps);
         } catch (Exception e){
-            return new Result.Error<List<AppInfo>>(e);
+            return new Result.Error<>(e);
         }
     }
 }

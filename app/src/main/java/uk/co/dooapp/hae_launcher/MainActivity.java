@@ -68,4 +68,17 @@ public class MainActivity extends AppCompatActivity {
                 binding.batteryLevel.setText(batteryInfo.getLevel() + " %");
         });
     }
+
+    @Override
+    protected void onPause() {
+        mainViewModel.cancelWeatherUpdates();
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        if(mainViewModel.isUpdatesCancelled() )
+            mainViewModel.makeWeatherRequest();
+        super.onResume();
+    }
 }
